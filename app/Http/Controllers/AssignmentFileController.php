@@ -84,21 +84,20 @@ class AssignmentFileController extends BaseController
      */
     public function store(Request $request)
     {
-
+        // dd($request->zipFile);
         $request->validate([
             'assignment_id' => 'required|numeric',
             'user_name' => 'required|string|max:255',
             'zipFile' => 'required|file|max:2048',
         ]);
-        $doc = $request->zipFile;
-        $doc_name = $doc->getClientOriginalName();
-        $doc_name = $request->user_name . '_' . $doc_name;
-        $doc->move(public_path('storage/docs'), $doc_name);
-        AssignmentFile::create([
+        $assignmentFile = AssignmentFile::create([
             'assignment_id' => $request->assignment_id,
             'user_name' => $request->user_name,
-            'file_name' => $doc_name,
         ]);
+
+        $assignmentFile
+            ->addMediaFromRequest('zipFile')
+            ->toMediaCollection();
         Alert::success('Assignment Submitted!', 'Successfully submitted the  assignment');
         return redirect()->back();
     }
@@ -108,9 +107,10 @@ class AssignmentFileController extends BaseController
      */
     public function show(AssignmentFile $assignmentFile)
     {
-
         $data = $this->curdInfo();
         $data['item'] = $assignmentFile;
+        $media = $assignmentFile->getMedia('*');
+        $data['url'] = $media[0]->geturl();
         return view('assignmentFile.show', $data);
     }
 
@@ -135,12 +135,6 @@ class AssignmentFileController extends BaseController
      */
     public function destroy(AssignmentFile $assignmentFile)
     {
-        $doc_names = $assignmentFile->file_name;
-        $doc_path = public_path() . '/storage/docs/';
-        $file = $doc_path . $doc_names;
-        if (file_exists($file)) {
-            unlink($file);
-        }
         $assignmentFile->delete();
         Alert::success('Assignment File Deleted!', 'Successfully deleted the  assignment file');
         return redirect()->route('assignmentFiles.index');

@@ -2,15 +2,8 @@
 
 @section('content')
 
-<div class="card">
-    <h5 class="card-header">Assignment</h5>
-    <div class="card-body">
-        <h3 class="card-title font-weight-bold">{{$item->title}}</h3>
-        <br>
-        <p class="card-text">{{$item->details}}</p>
-        <a href="{{route($route. '.index')}}" class="btn btn-danger">Cancel</a>
-    </div>
-</div>
+<br>
+<br>
 
 <div class="card">
     <div class="card-header">

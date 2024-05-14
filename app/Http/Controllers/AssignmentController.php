@@ -124,12 +124,6 @@ class AssignmentController extends BaseController
         $assignment_files = $assignment->assignmentFiles;
         if ($assignment_files) {
             foreach ($assignment_files as $assignmentFile) {
-                $doc_names = $assignmentFile->file_name;
-                $doc_path = public_path() . '/storage/docs/';
-                $file = $doc_path . $doc_names;
-                if (file_exists($file)) {
-                    unlink($file);
-                }
                 $assignmentFile->delete();
             }
         }

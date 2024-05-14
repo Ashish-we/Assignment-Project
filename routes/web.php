@@ -22,7 +22,7 @@ Route::get('/', function () {
     return view('welcome', $data);
 });
 
-Auth::routes();
+Auth::routes(['register'=>false,'reset' => false]);
 
 
 

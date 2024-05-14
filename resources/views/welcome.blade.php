@@ -103,7 +103,7 @@
                     </span>
                 </div>
                 <div class="form-group">
-                    <label for="exampleFormControlSelect1">User Name</label>
+                    <label for="exampleFormControlSelect1">Name & Roll (e.g. Ashish 10)</label>
                     <input type="text" name="user_name" class="form-control" required>
                     <span class="text-danger">
                         @error('user_name')
@@ -120,8 +120,8 @@
         // Initialize Dropzone on the file input field
         Dropzone.options.myDropzone = {
             paramName: "zipFile", // The name of the file input field
-            maxFilesize: 2048, // Max file size in MB
-            acceptedFiles: ".zip", // Accepted file types
+            maxFilesize: 10240, // Max file size in MB
+            acceptedFiles: ".zip,.html,.docx,.pdf,.pptx", // Accepted file types
             addRemoveLinks: true, // Add remove links for uploaded files
             dictDefaultMessage: "Drop files here or click to upload",
             dictRemoveFile: "Remove file",
